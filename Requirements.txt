@@ -1,0 +1,17 @@
+To run the provided code, you need the following dependencies and setup:
+
+1. Python Packages
+Install these libraries using pip:
+
+pip install customtkinter tenseal scapy pandas scikit-learn numpy matplotlib pillow
+
+
+2. System Dependencies
+Tkinter:
+Windows/macOS: Usually included with Python.
+
+3. Dataset File
+Place the NSL-KDD dataset (nsl_kdd.csv) in the same directory as the script.
+Link to download the dataset : https://github.com/Mamcose/NSL-KDD-Network-Intrusion-Detection/blob/master/NSL_KDD_Train.csv
+
+If you don’t have the dataset, adjust the code to use your own data or disable ML features.
