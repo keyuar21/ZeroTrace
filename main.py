@@ -10,12 +10,10 @@ import matplotlib.pyplot as plt
 import tenseal as ts
 from scapy.all import sniff
 
-# New Imports for ML-based anomaly detection and image display
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 from PIL import Image, ImageTk
 
-# Global variable to store ML anomaly detection results for GUI viewing
 ml_results = {}
 
 # ------------------------------
@@ -67,7 +65,7 @@ def setup_encryption_context():
             coeff_mod_bit_sizes=[60, 40, 60]
         )
         context.generate_galois_keys()
-        context.global_scale = 2**40  # Set an appropriate global scale factor
+        context.global_scale = 2**40 
         logging.info("Encryption context set up successfully")
         return context
     except Exception as e:
@@ -182,13 +180,13 @@ def encrypted_ml_anomaly_detection(encrypted_vector, threshold=0.0):
     and stats is a dictionary containing the mean and standard deviation of all scores.
     """
     try:
-        # Retrieve the TenSEAL context from the encrypted vector.
+       
         context = encrypted_vector.context
         
-        # Compute element-wise square: x^2
+       
         encrypted_x2 = encrypted_vector * encrypted_vector
         
-        # Create an encrypted constant vector of ones
+        
         count = len(encrypted_vector.decrypt())  # decrypting only to get count (non-sensitive)
         ones = [1.0] * count
         encrypted_ones = ts.ckks_vector(context, ones)
@@ -198,7 +196,7 @@ def encrypted_ml_anomaly_detection(encrypted_vector, threshold=0.0):
         w1 = 0.01
         w2 = -5.0
         
-        # Compute the encrypted anomaly score: w0 * x + w1 * x^2 + w2
+        
         encrypted_score = encrypted_vector * w0 + encrypted_x2 * w1 + encrypted_ones * w2
         
         # Decrypt the anomaly scores
@@ -284,9 +282,11 @@ def analyze_model_performance(dataset_file="nsl_kdd.csv"):
     )
     return performance_summary
 
-# ------------------------------
+
+
+
 # Function to Process Network Data (Called in a Separate Thread)
-# ------------------------------
+
 def process_network_data(params):
     global ml_results
     start_time = time.time()
@@ -399,9 +399,9 @@ def process_network_data(params):
         total_time = time.time() - start_time
         logging.info(f"Total Execution Time: {total_time:.4f} seconds")
 
-# ------------------------------
-# GUI Application using customTkinter
-# ------------------------------
+
+# GUI 
+
 class NetworkAnalysisApp(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -556,9 +556,7 @@ class NetworkAnalysisApp(ctk.CTk):
             details += "No anomalies detected.\n"
         text_area.insert(tk.END, details)
 
-# ------------------------------
-# Main Execution
-# ------------------------------
+#main
 if __name__ == "__main__":
     app = NetworkAnalysisApp()
     app.mainloop()
